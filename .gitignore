@@ -1,0 +1,15 @@
+.ipynb_checkpoints/
+__pycache__/
+params/
+results/
+A2C_continuous_separate_dev.ipynb
+A2C_continuous_share_dev.ipynb
+visualize_on_cloud.ipynb
+common/__pycache__/
+GitHub/
+質問/
+保管庫/
+play_imgs/
+frames/
+demo_model_params/メモ.txt
+pybullet-gym/
