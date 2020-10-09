@@ -294,7 +294,7 @@ class Planner_share():
         
         return d_states              
         
-    def train(self, episodes, steps_per_episode, gamma=0.99, metrics=0, softplus_to_advantage=False, 
+    def train(self, episodes, steps_per_episode, gamma=0.99, metrics=1, softplus_to_advantage=False, 
               weight_decay_lmd=0, verbose_interval=100):
         
         #エピソード毎の記録list生成

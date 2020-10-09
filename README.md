@@ -462,7 +462,7 @@ p_model_instance.overwrite_params_from_file(file_path=hoge)
 |episodes|整数|必須|訓練に費やすエピソード数。|
 |steps_per_episode|整数|必須|1エピソードで何ステップまで行うか。|
 |gamma|浮動小数点数|0.99|報酬の現在価値算出のための割引率。|
-|metrics|整数|0|このモデルの性能指標を指定する。0か1を指定する。<br>0：1エピソードあたりのステップ数（が多いほど性能が良い、と見なす）<br>1：1エピソードあたりのscore（が大きいほど性能が良い、と見なす）|
+|metrics|整数|1|このモデルの性能指標を指定する。0か1を指定する。<br>0：1エピソードあたりのステップ数（が多いほど性能が良い、と見なす）<br>1：1エピソードあたりのscore（が大きいほど性能が良い、と見なす）|
 |softplus_to_advantage|boolean|False|Advantageにsoftplusを適用するか。<br>Advantageがマイナスになるのを防止したい場合に使用する。<br>※共有型の場合、actor lossからcritic側への逆伝播は行わないので、softplusの逆伝播も考慮する必要は無い。|
 |weight_decay_lmd|浮動小数点数|0|荷重減衰のλ。|
 |verbose_interval|整数|100|何エピソード毎にエピソード記録を出力するか。<br>0以下を指定すると一切出力しない。|
