@@ -348,7 +348,7 @@ trained_params/<br>
 &nbsp;└（訓練済パラメーターのpickleファイル）<br>
 -----------------------------------------------------------------------------------------------------<br>
 - Planner_share.py：共有型モデル本体。中身はclass Planner_share です。モデルを動かすにはcommonフォルダが必要です。
-- Planner_separate.py：分離型モデル本体。中身はclass Planner_share です。モデルを動かすにはcommonフォルダが必要です。
+- Planner_separate.py：分離型モデル本体。中身はclass Planner_separate です。モデルを動かすにはcommonフォルダが必要です。
 <br>
 
 ## モデルの各ファイルの構成
