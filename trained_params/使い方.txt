@@ -1,0 +1,62 @@
+Pendulumの訓練済パラメーターファイルの使い方
+
+ファイル名：Pendulum_sep_202010010221.pickle
+
+これは分離型用です。
+
+以下の順にJupyter Notebookのコードセルに入力して実行してください。
+※ローカルPCでの実行に限ります。Google Colaboratoryのような可視化不可能な環境では実行も不可能です。
+
+①gymのインストール（必要な場合だけ）
+!pip install gym
+
+②環境の生成
+
+import gym
+#Pendulum
+env = gym.make("Pendulum-v0")
+st_dim = env.observation_space.shape[0]
+ac_dim = env.action_space.shape[0]
+
+③モデルインスタンスの生成
+
+#分離型
+from Planner_separate import *
+p_sep = Planner_separate("test", env=env, state_dim=st_dim, action_dim=ac_dim)
+
+④訓練済パラメーターのセット
+
+p_sep.overwrite_params_from_file("./Pendulum_sep_202010010221.pickle")
+
+⑤Pendulumをplay
+
+curr_st=None
+next_st=None
+done=False
+
+try:
+
+    curr_st = env.reset()
+        
+    env.render(mode='human')  
+        
+    for st in range(200):
+
+        print("st:", st)
+	
+	#ここで訓練済モデルから次の行動の推測を得る
+        action_predicted = p_sep.predict_best_action(curr_st) 
+      
+        next_st, reward, done, _ = env.step(action_predicted)
+	env.render(mode='human')
+
+        print(" curr_st" + str(curr_st) + " reward:" + str(reward) + " action_predicted:" + str(action_predicted) + " next_st:" + str(next_st)  )
+            
+        if done==True:
+            print("done " + str(st+1) + "steps" )
+            break
+
+        curr_st = next_st
+
+    finally:
+        env.close()
