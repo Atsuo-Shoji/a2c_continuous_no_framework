@@ -148,18 +148,14 @@ class Planner_separate():
         #Actorから正規分布の平均μと分散varのlog_varを得る。
         #どちらも(1, action_dim) 
         mu, log_var = self._forward_output_actor(a_state, train_flg=False)
-        #print("in predict_best_action mu.shape:", mu.shape)
         
         #分散var
         #(1, action_dim) 
         var = np.exp(log_var)
-        #print("in predict_best_action var.shape:", var.shape)
         
         #muとvarからバッチ数のaxis=0を削除し、(action_dim,)にする
         mu = mu[0]
         var = var[0]
-        
-        #print("in predict_best_action var[0].shape:", var.shape)
         
         #平均μと分散varの正規分布からサンプリング
         best_action = np.random.normal(loc=mu, scale=np.sqrt(var))

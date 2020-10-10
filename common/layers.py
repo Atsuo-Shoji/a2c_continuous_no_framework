@@ -450,7 +450,7 @@ class Actor_Loss():
         #バッチ内のデータ1件1件のlossの全件分の配列「c」
         #c = -1.0 * np.sum( -log_var - ( (action - mu)**2 / num.exp(log_var) ) , axis=1, keepdims=True) * advantage
         #右辺冒頭の -1.0 * は、損失関数にして最小化したいから。 
-        #a = -log_var + ( (action -mu)**2 / num.exp(log_var) )　　のshapeは(N, action_dim)
+        #a = -log_var - ( (action -mu)**2 / num.exp(log_var) )　　のshapeは(N, action_dim)
         #b = -1.0 * np.sum( -log_var + ( (action - mu)**2 / num.exp(log_var) )  , axis=1, keepdims=True)　のshapeは(N, 1)
         #↑actionの各次元（0 ～ action_dim-1）の数値を合算している。
         #cのshapeは(N, 1)
