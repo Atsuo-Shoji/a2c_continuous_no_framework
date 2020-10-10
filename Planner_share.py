@@ -29,8 +29,7 @@ class Planner_share():
         output_dim_afn1 = self._state_dim*10
         output_dim_afn3 = self._action_dim*10
         output_dim_afn2 = np.ceil( np.sqrt(output_dim_afn1*output_dim_afn3) ).astype(np.int)
-        #print("output_dim_afn2:", output_dim_afn2)
-
+        
         #①Affine 「afn1」　instance of Affine
         opt_afn1 = Adam(lr=0.001, rho1=0.9, rho2=0.999)        
         afn1 = Affine(name="afn1", input_shape=(state_dim,), output_shape=(output_dim_afn1,), optimizer=opt_afn1, 
@@ -244,7 +243,7 @@ class Planner_share():
         ##Actorのloss、Criticのloss##
         
         #以下は、Criticの出力VがActorのlossとCriticのlossへと2分岐している。
-        #が（ここでの話ではないが）、backwardでは、Actorのlossからの逆伝播はさせない。
+        #が、backward時は、Actorのlossからの逆伝播はさせない。
         
         #Actorのloss
         La = self._loss_actor.forward(mu, log_var, action, V, G, softplus_to_advantage)
@@ -296,6 +295,8 @@ class Planner_share():
         
     def train(self, episodes, steps_per_episode, gamma=0.99, metrics=1, softplus_to_advantage=False, 
               weight_decay_lmd=0, verbose_interval=100):
+        
+        start_time = datetime.now()
         
         #エピソード毎の記録list生成
         loss_episodes = [] #エピソード毎のlossのlist
@@ -426,6 +427,11 @@ class Planner_share():
         self._adopt_all_learnable_params_kept_temporarily()
         if verbose_interval>0:
             print("一時退避したベストなパラメーターを正式採用")
+            
+        end_time = datetime.now()        
+        
+        processing_time_total = end_time - start_time #総処理時間　datetime.timedelta
+        processing_time_total_string = timedelta_HMS_string(processing_time_total) #総処理時間の文字列表現
         
         #resultを生成し、エピソード毎の記録listや引数やらを追加
         result = {}
@@ -437,6 +443,8 @@ class Planner_share():
         result["step_count_episodes"] = step_count_episodes
         result["score_episodes"] = score_episodes
         result["step_count_total"] = step_count_total
+        result["processing_time_total_string"] = processing_time_total_string
+        result["processing_time_total"] = processing_time_total
         #以下引数
         result["episodes"] = episodes
         result["steps_per_episode"] = steps_per_episode
@@ -444,6 +452,8 @@ class Planner_share():
         result["metrics"] = metrics
         result["softplus_to_advantage"] = softplus_to_advantage
         result["weight_decay_lmd"] = weight_decay_lmd
+        #以下メンバー変数
+        result["wc_critic_loss"] = self._loss.wc
         
         return result
     

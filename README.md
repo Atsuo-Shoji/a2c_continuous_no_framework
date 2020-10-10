@@ -98,8 +98,7 @@ action（行動）をK次元ベクトルとし、各次元が互いに独立で�
 A：行動変数　　　S：状態変数　　　N：バッチデータ（1エピソード時系列データ）のサイズ <br>
 k：actionのK次元ベクトルのk次元目　　　i：バッチデータ（1エピソード時系列データ）のi番目 <br>
 μ：正規分布の平均　　　var：正規分布の分散<br>
-advantage：割引報酬和Gi - 価値関数Vi<BR>
-「1/N」はモンテカルロ近似に由来
+advantage：割引報酬和Gi - 価値関数Vi
 
 ![Actor損失関数_50](https://user-images.githubusercontent.com/52105933/95014983-7cd9d600-0685-11eb-9459-a7fd1d3c9876.png)
 
@@ -108,8 +107,7 @@ Actorの損失関数の計算グラフ：<br>
 （手書きですみません・・）<br>
 図中の（advの逆伝播の矢印の上の）「x」印は、（共有型において）この逆伝播はしない、という意味です。<br>
 
-<!--![loss_actor_計算グラフ_70](https://user-images.githubusercontent.com/52105933/95468352-60a5a400-09b9-11eb-9e05-6f258f9fe521.png)-->
-![loss_actor_計算グラフ_60](https://user-images.githubusercontent.com/52105933/95468539-964a8d00-09b9-11eb-9227-7a58f85dc048.png)
+![loss_actor_計算グラフ2_75](https://user-images.githubusercontent.com/52105933/95654330-565ee380-0b3a-11eb-9de6-5a9e9721a53b.png)
 
 <b>※共有型において、なぜActorの損失をAdvantageを介してCritic側に逆伝播させないのか</b><br>
 感覚的な説明しかできませんが・・・<br>
@@ -190,7 +188,7 @@ Pendulumの仕様の特徴は、「1エピソードのステップ数は常に�
 #### 訓練記録の比較
 <br>
 
-![共有型と分離型の比較_LunarLanderConti_70](https://user-images.githubusercontent.com/52105933/95020049-c6d1b480-06a3-11eb-91c6-1ce3587c8c9a.png)
+![共有型と分離型の比較_LunarLanderConti_70](https://user-images.githubusercontent.com/52105933/95654889-17cb2800-0b3e-11eb-930f-932c8a17e664.png)
 
 | 共有型/分離型 | 稼得score合計 |稼得score最大値|
 |     :---:      |     :---:      |     :---:      |
@@ -199,7 +197,7 @@ Pendulumの仕様の特徴は、「1エピソードのステップ数は常に�
 
 #### まとめ・考察など
 
-共有型はそこそこ機能しました。稼得scoreに成長が見られました。<br>
+共有型ははじめ3分の1ほどは稼得scoreに成長が見られたものの0付近で停滞し、そのまま終わりました。<br>
 分離型では共有型よりかなり高いscoreを獲得するまで訓練することができました。<br>
 分離型の方が相対的に高いパフォーマンスを発揮しました。<br>
 
@@ -209,7 +207,7 @@ Pendulumと同様、訓練初期は割引報酬和Gの数値が高く、Critic�
 Agentの行動次第でステップ数に変化がつくので、訓練初期は毎エピソード「必ず」累積報酬和が大きなマイナスの数値になるとは限らず、累積報酬和が大きなマイナスの数値になる<b>「傾向」</b>がある、としかならないです。<br>
 よって、訓練初期であっても共有型においてNN共有部分が丸かぶりするCriticのlossは「必ず」莫大な数値になるわけではなく、そうなる<b>「傾向」</b>があるだけ、となります。<br>
 共有型のlossのグラフはまさにそうなっています。<br>
-ここがPendulumとの決定的な違いとなります。<br>
+ここがPendulumとの違いとなります。<br>
 
 ただこの<b>「NN共有部分が丸かぶりするCriticのlossは莫大な数値になる傾向がある」は分離型に対してハンデ</b>であることは明らかで、共有型は分離型より劣ってしまうのだと思います。<br>
 
@@ -274,9 +272,11 @@ Agentの行動次第でステップ数に変化がつくので、訓練初期は
 
 ### 全体のまとめ・考察など
 
-大まかには、以下の現象となりました。
-- 「稼得scoreの大きさ」と「訓練のスピード」において共有型は分離型より劣るが、分離型もそれほどよいわけではない
-- 分離型であっても、ある時点で訓練の進行が止まるor訓練そのものが為されない
+大まかには、以下の現象となりました。<br>
+「稼得scoreの絶対量」と「稼得scoreが伸びるスピード」において・・・
+- **共有型はほとんど機能しなかった。**
+- 分離型もそれほど良かったわけではない。<br>
+スピードが緩やか、ある時点で訓練の進行が停滞、訓練そのものが為されない、など。
 
 以下のような原因であると考えています。<br>
 書いている順番に意味はありません。<br>
@@ -374,7 +374,7 @@ p_model_instance = Planner_separate(name="hoge", env=env, state_dim=3, action_di
 #以下、モデルインスタンスに対してそのpublicインターフェースを呼ぶ
 
 #このモデルインスタンスの訓練 
-result = p_model_instance.train(episodes=10000, steps_per_episode=200, gamma=0.99, metrics=0, softplus_to_advantage=False, weight_decay_lmd=0, verbose_interval=10)
+result = p_model_instance.train(episodes=10000, steps_per_episode=200, gamma=0.99, metrics=1, softplus_to_advantage=False, weight_decay_lmd=0, verbose_interval=10)
 
 #この訓練済モデルインスタンスにPendulumをPlayさせる 
 try:
@@ -453,7 +453,7 @@ p_model_instance.overwrite_params_from_file(file_path=hoge)
 
 <br>
 
-### ＜関数＞result = *model_instance*.train(episodes, steps_per_episode, gamma=0.99, metrics=0, softplus_to_advantage=False, weight_decay_lmd=0, verbose_interval=100)
+### ＜関数＞result = *model_instance*.train(episodes, steps_per_episode, gamma=0.99, metrics=1, softplus_to_advantage=False, weight_decay_lmd=0, verbose_interval=100)
 モデルインスタンスを訓練します。<br>
 
 #### 引数：
@@ -478,6 +478,9 @@ p_model_instance.overwrite_params_from_file(file_path=hoge)
 |loss_critic_episodes|list|各エピソードのcrtic lossのエピソード毎の履歴。listの1要素は1エピソード。|
 |score_episodes|list|各エピソードのscore（稼得報酬の単純合計）のエピソード毎の履歴。listの1要素は1エピソード。|
 |step_count_total|整数|実際のステップ総数。|
+|processing_time_total|datetime.timedelta|総処理時間。|
+|processing_time_total_string|文字列|総処理時間の文字列表現。|
+|wc_critic_loss|浮動小数点数|（共有型）このモデルインスタンスに設定されたcritic lossの重み係数wc_critic_loss。|
 |train()の引数|-|引数の指定値。|
 
 <br>

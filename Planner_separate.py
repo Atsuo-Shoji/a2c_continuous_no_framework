@@ -330,6 +330,8 @@ class Planner_separate():
     def train(self, episodes, steps_per_episode, gamma=0.99, metrics=1, softplus_to_advantage=False, 
               weight_decay_lmd=0, verbose_interval=100):
         
+        start_time = datetime.now()
+        
         #エピソード毎の記録list生成
         loss_episodes = [] #エピソード毎のlossのlist
         loss_actor_episodes = [] #エピソード毎のActorのlossのlist
@@ -465,6 +467,11 @@ class Planner_separate():
         self._adopt_all_learnable_params_kept_temporarily()
         if verbose_interval>0:
             print("一時退避したベストなパラメーターを正式採用")
+            
+        end_time = datetime.now()        
+        
+        processing_time_total = end_time - start_time #総処理時間　datetime.timedelta
+        processing_time_total_string = timedelta_HMS_string(processing_time_total) #総処理時間の文字列表現
         
         #resultを生成し、エピソード毎の記録listや引数やらを追加
         result = {}
@@ -475,6 +482,8 @@ class Planner_separate():
         result["step_count_episodes"] = step_count_episodes
         result["score_episodes"] = score_episodes
         result["step_count_total"] = step_count_total
+        result["processing_time_total_string"] = processing_time_total_string
+        result["processing_time_total"] = processing_time_total
         #以下引数
         result["episodes"] = episodes
         result["steps_per_episode"] = steps_per_episode
