@@ -1,4 +1,4 @@
-# A2Cをフレームワークを使用せず構築　ActorとCriticで中間層を共有／分離の2パターンで比較
+# A2C（Advantage Actor Critic）<br>ActorとCriticで中間層を共有／分離の2パターンを構築し比較<br>（フレームワーク不使用）
 
 <br>フレームワークを使用せず、numpyだけでA2Cを構築しました。<br>
 ActorとCriticで中間層を共有する構成と、ActorとCriticを分離する構成の2パターンで構築し、比較しています。<br>
