@@ -118,11 +118,9 @@ Actorの損失関数の計算グラフ：<br>
 ![loss_actor_計算グラフ2_75](https://user-images.githubusercontent.com/52105933/95654330-565ee380-0b3a-11eb-9de6-5a9e9721a53b.png)
 
 <b>※共有型において、なぜActorの損失をAdvantageを介してCritic側に逆伝播させないのか</b><br>
-感覚的な説明しかできませんが・・・<br>
 actionの推測は、K次元正規分布N(μ, var)からのサンプリングで行われます。<br>
-その際、NNの出力値として使用するのはμとvarだけです。価値関数Vは使用しません。<BR>
-よって、Actorの損失関数の最小化にCritic側のV出力ノードを”協力”させるわけにはいかないのです。<br>
-・・・と思います。
+その際、NNの出力値として使用するのはμとvarだけです。価値関数Vは使用しません。<br>
+よって、Actorの損失関数の最小化にVを関与させる＝Critic側のV出力ノードを関与させると、（Vを使用しない）actionの推論時における最適なμとvarにはならないです。
 
 <BR>
     
@@ -304,7 +302,7 @@ REINFORCEアルゴリズムにより、行動価値関数を割引報酬和で�
 ノードの増やし方ではなく、慢性的に表現力が不足していることも考えられます。<br>
 以下のようにNNを拡張する、ということも一案です。<BR>
 
-![NN概念図_新案_60](https://user-images.githubusercontent.com/52105933/96055745-d7620600-0ebf-11eb-89c0-91d646cd3a94.png)
+![NN概念図_新案_60](https://user-images.githubusercontent.com/52105933/96056598-fe213c00-0ec1-11eb-990f-6b90ba7b9d5d.png)
 
 ③共有型のCriticのlossの重み係数が不適切<br>
 
