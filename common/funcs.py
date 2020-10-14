@@ -42,5 +42,20 @@ def timedelta_HMS_string(td):
     
     return HMS_string
 
+def standardize(obj_data, with_mean=True):
+    #標準化関数
+    
+    epsilon = 1e-6
+    
+    std = np.std(obj_data)
+    
+    if with_mean==True:
+        avg = np.average(obj_data)
+        ret = (obj_data - avg) / (std + epsilon)
+    else:
+        ret = obj_data / (std + epsilon)
+    
+    return ret
+
 ###Utility Functions　終わり###
 

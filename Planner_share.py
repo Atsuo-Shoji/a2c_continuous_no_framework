@@ -293,7 +293,7 @@ class Planner_share():
         
         return d_states              
         
-    def train(self, episodes, steps_per_episode, gamma=0.99, metrics=1, softplus_to_advantage=False, 
+    def train(self, episodes, steps_per_episode, gamma=0.99, metrics=1, standardize_G=True, softplus_to_advantage=False, 
               weight_decay_lmd=0, verbose_interval=100):
         
         start_time = datetime.now()
@@ -378,10 +378,16 @@ class Planner_share():
             #割引報酬和「G」算出
             li_G = self._calc_G_of_step_in_an_episode(reward_steps_episode, gamma)
             
+            #割引報酬和Gの標準化　引数standardize_Gでやるかやらないか指定される
+            if standardize_G==True:
+                Gs = standardize(li_G, with_mean=False).reshape(-1, 1) #平均を0にしない標準化
+            else:
+                Gs = np.array(li_G).reshape(-1, 1)
+            
             #loss算出の順伝播            
             states = np.array(state_steps_episode)
             actions = np.array(action_steps_episode)
-            Gs = np.array(li_G).reshape(-1, 1)
+            
             loss_ep, loss_actor_ep, loss_critic_ep = self._forward_losses(
                 state=states, action=actions, G=Gs, softplus_to_advantage=softplus_to_advantage, 
                 weight_decay_lmd=weight_decay_lmd)
@@ -450,6 +456,7 @@ class Planner_share():
         result["steps_per_episode"] = steps_per_episode
         result["gamma"] = gamma
         result["metrics"] = metrics
+        result["standardize_G"] = standardize_G
         result["softplus_to_advantage"] = softplus_to_advantage
         result["weight_decay_lmd"] = weight_decay_lmd
         #以下メンバー変数
