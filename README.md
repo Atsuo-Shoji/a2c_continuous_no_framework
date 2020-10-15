@@ -123,7 +123,8 @@ Actorの損失関数の計算グラフ：<br>
 （手書きですみません・・）<br>
 図中の（advの逆伝播の矢印の上の）「x」印は、（共有型において）この逆伝播はしない、という意味です。<br>
 
-![loss_actor_計算グラフ2_75](https://user-images.githubusercontent.com/52105933/95654330-565ee380-0b3a-11eb-9de6-5a9e9721a53b.png) <br>
+![loss_actor_計算グラフ2_加工_75](https://user-images.githubusercontent.com/52105933/96193596-6be16c80-0f83-11eb-8d31-5ac68ca65b76.png) <br>
+
 da = -dLa * advantage / N　として<br>
 dμk = 2da * (Aik - μk) / vark<br>
 dlog(vark) = da * ( (Aik - μk)^2 / vark - 1 )<br>
