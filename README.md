@@ -7,6 +7,10 @@
 
 <br>
 
+#### <<未訓練モデル/訓練済モデルでplayした結果の比較>>
+
+<br>
+
 | LunarLanderContinuous　未訓練モデルでPlay<br>枠外に飛去またはゴール外に落下 | LunarLanderContinuous　訓練済モデルでPlay<br>ゴール内に水平を保って着陸 |
 |      :---:       |     :---:      |
 |![LunarLanderc_beginner](https://user-images.githubusercontent.com/52105933/95009756-6882e280-065f-11eb-8d15-51e64f56b7b6.gif)|![LunarLanderc_step_202010022143_2_138s](https://user-images.githubusercontent.com/52105933/95009767-7c2e4900-065f-11eb-8182-a271390bf9df.gif)|
