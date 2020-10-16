@@ -34,7 +34,7 @@
 ActorとCriticで中間層を共有する構成と、ActorとCriticを分離する構成の2パターンで構築し、比較しています。<br>
 **強化学習とA2Cを材料にして、マルチタスク学習とシングルタスク学習の比較**をしているものだと思ってください。<BR>
     
-本モデルは、状態、行動とも連続値を取る環境を対象としています。<BR>
+本モデルは、行動が連続値を取る環境を対象としています。<BR>
 本稿では、OpenAI GymのPendulum、LunarLanderContinuous、BipedalWalker、pybullet-gymのHopperPyBulletを使用しています。<br>
     
 また、フレームワークを使用せず、主にnumpyだけでA2Cを構築しています。<br>
@@ -47,7 +47,26 @@ ActorとCriticで中間層を共有する構成と、ActorとCriticを分離す�
     
 ### フレームワークを使用せず実装
 フレームワークを使用せずに主にnumpyだけで実装しています。<br>
-Actorの損失、誤差逆伝播、その他諸々を自力で0から実装しています。 <br>
+Actorの損失、誤差逆伝播、その他諸々を自力で0から実装しています。 
+<br><br>
+    
+### 対象とする環境
+本モデルは、仕様上、以下の環境を対象としています。<BR>
+
+| 状態 | 行動 |
+|  :---:  |  :---:  |
+|離散/連続|連続|
+
+**基本的にモデルフリー**ですが、環境毎の仕様や性質（状態や行動の次元数の大きさ、報酬設計など）により、訓練成果が変動します。<br>
+
+本稿の実験においては、以下の環境を使用しています。<br>
+
+| 環境名 | 外観| 状態の次元 | 行動の次元 |1エピソードでの上限ステップ数|目的|
+|      :---:     |      :---:      |     :---:     |     :---:      |     :---:     |     :---:     |
+|Pendulum|![pendulum_mini](https://user-images.githubusercontent.com/52105933/95575625-fa2c8e80-0a69-11eb-935c-38da16dc8afa.png)|3|1|上限は無し<br>固定で200ステップ/エピソード|バーの直立|
+|LunarLanderContinuous|![LunarLanderContinuous_mini](https://user-images.githubusercontent.com/52105933/95575748-352ec200-0a6a-11eb-8494-997ac236f1ae.png)|8|2|1000|ゴール領域に着陸|
+|HopperPyBullet|![hopper_mini](https://user-images.githubusercontent.com/52105933/95576384-50e69800-0a6b-11eb-9a18-711c04d690c9.png)|15|3|1000|歩いて（跳ねて？）遠くまで前進|
+|BipedalWalker|![BipedalWalker_mini](https://user-images.githubusercontent.com/52105933/95576368-4cba7a80-0a6b-11eb-922e-52c584a8915e.png)|24|4|2000|歩いて遠くまで前進|
 
 <br>
     
@@ -96,16 +115,7 @@ G' =  G / σ　（σは標準偏差）<BR><BR>
 - NNのパラメーター更新はエピソード毎　＝　1イテレーション/エピソード
 <BR><BR>
 - （共有型のみ）全体の損失 = Actorの損失 + 重み係数 × Criticの損失　とする<br>
-本稿の全実験において、この重み係数を1.0に統一する（比較のため）<BR><BR>
-- 使用する環境は以下の通り
-
-| 環境名 | 外観| 状態の次元 | 行動の次元 |1エピソードでの上限ステップ数|
-|      :---:     |      :---:      |     :---:      |     :---:      |     :---:      |
-|Pendulum|![pendulum_mini](https://user-images.githubusercontent.com/52105933/95575625-fa2c8e80-0a69-11eb-935c-38da16dc8afa.png)|3|1|上限は無く固定で200ステップ/エピソード|
-|LunarLanderContinuous|![LunarLanderContinuous_mini](https://user-images.githubusercontent.com/52105933/95575748-352ec200-0a6a-11eb-8494-997ac236f1ae.png)|8|2|1000|
-|HopperPyBullet|![hopper_mini](https://user-images.githubusercontent.com/52105933/95576384-50e69800-0a6b-11eb-9a18-711c04d690c9.png)|15|3|1000|
-|BipedalWalker|![BipedalWalker_mini](https://user-images.githubusercontent.com/52105933/95576368-4cba7a80-0a6b-11eb-922e-52c584a8915e.png)|24|4|2000|
-
+本稿の全実験において、この重み係数を1.0に統一する（比較のため）
 <br>
 
 #### Actorの損失関数
