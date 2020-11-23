@@ -6,6 +6,7 @@ A2C_continuous_separate_dev.ipynb
 A2C_continuous_share_dev.ipynb
 visualize_on_cloud.ipynb
 common/__pycache__/
+common/env_wrappers.py
 GitHub/
 質問/
 保管庫/
