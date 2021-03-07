@@ -11,21 +11,21 @@
 
 <br>
 
-| LunarLanderContinuous　未訓練モデルでPlay<br>枠外に飛去またはゴール外に落下 | LunarLanderContinuous　訓練済モデルでPlay<br>ゴール内に水平を保って着陸 |
-|      :---:       |     :---:      |
-|![LunarLanderc_beginner](https://user-images.githubusercontent.com/52105933/95009756-6882e280-065f-11eb-8d15-51e64f56b7b6.gif)|![LunarLanderc_step_202010022143_2_138s](https://user-images.githubusercontent.com/52105933/95009767-7c2e4900-065f-11eb-8182-a271390bf9df.gif)|
+| LunarLanderContinuous　未訓練モデルでPlay<br>枠外に飛去またはゴール外に落下 ||LunarLanderContinuous　A2C訓練済モデルでPlay<br>ゴール内に水平を保って着陸 |
+|      :---:       |     :---:      |     :---:      |
+|![LunarLanderc_beginner](https://user-images.githubusercontent.com/52105933/95009756-6882e280-065f-11eb-8d15-51e64f56b7b6.gif)|![矢印（赤）](https://user-images.githubusercontent.com/52105933/110228721-b0779f80-7f46-11eb-8cd9-469501beea50.png)|![LunarLanderc_step_202010022143_2_138s](https://user-images.githubusercontent.com/52105933/95009767-7c2e4900-065f-11eb-8182-a271390bf9df.gif)|
 
-| BipedalWalker　未訓練モデルでPlay<br>すぐ転倒し前に進めない | BipedalWalker　訓練済モデルでPlay<br>拙いながら何とか前進 |
-|      :---:       |     :---:      |
-|![BipedalWalker_beginner_66s](https://user-images.githubusercontent.com/52105933/95009942-9c123c80-0660-11eb-9cb1-b5ee0a2a90f7.gif)|![BipedalWalker_202010011308](https://user-images.githubusercontent.com/52105933/95009953-b1876680-0660-11eb-9865-939f1559bc85.gif)|
+| BipedalWalker　未訓練モデルでPlay<br>すぐ転倒し前に進めない || BipedalWalker　A2C訓練済モデルでPlay<br>拙いながら何とか前進 |
+|      :---:       |     :---:      |     :---:      |
+|![BipedalWalker_beginner_66s](https://user-images.githubusercontent.com/52105933/95009942-9c123c80-0660-11eb-9cb1-b5ee0a2a90f7.gif)|![矢印（赤）](https://user-images.githubusercontent.com/52105933/110228721-b0779f80-7f46-11eb-8cd9-469501beea50.png)|![BipedalWalker_202010011308](https://user-images.githubusercontent.com/52105933/95009953-b1876680-0660-11eb-9865-939f1559bc85.gif)|
 
-| Pendulum　未訓練モデルでPlay<br>バーは一向に立たない | Pendulum　訓練済モデルでPlay<br>バーは途中から直立を維持 |
-|      :---:       |     :---:      |
-|![Pendulum_sep_biginner](https://user-images.githubusercontent.com/52105933/95010103-b3055e80-0661-11eb-9969-15166ff55da4.gif)|![Pendulum_sep_202010010221](https://user-images.githubusercontent.com/52105933/95010122-d6c8a480-0661-11eb-8703-64dcad0b2d35.gif)|
+| Pendulum　未訓練モデルでPlay<br>バーは一向に立たない || Pendulum　A2C訓練済モデルでPlay<br>バーは途中から直立を維持 |
+|      :---:       |     :---:      |     :---:      |
+|![Pendulum_sep_biginner](https://user-images.githubusercontent.com/52105933/95010103-b3055e80-0661-11eb-9969-15166ff55da4.gif)|![矢印（赤）](https://user-images.githubusercontent.com/52105933/110228721-b0779f80-7f46-11eb-8cd9-469501beea50.png)|![Pendulum_sep_202010010221](https://user-images.githubusercontent.com/52105933/95010122-d6c8a480-0661-11eb-8703-64dcad0b2d35.gif)|
 
-| HopperPyBullet　未訓練モデルでPlay<br>すぐ転倒し前に進めない | HopperPyBullet　訓練済モデルでPlay<br>上限1000ステップまで元気に前進 |
-|      :---:       |     :---:      |
-|![HopperPyBullet_test](https://user-images.githubusercontent.com/52105933/95031842-07a4ea00-06f3-11eb-9022-db54e399da32.gif)|![Hopper_std_G_202010122350_1000_1579](https://user-images.githubusercontent.com/52105933/95936264-218bae80-0e10-11eb-9804-48b9add13747.gif)|
+| HopperPyBullet　未訓練モデルでPlay<br>すぐ転倒し前に進めない || HopperPyBullet　A2C訓練済モデルでPlay<br>上限1000ステップまで元気に前進 |
+|      :---:       |     :---:      |     :---:      |
+|![HopperPyBullet_test](https://user-images.githubusercontent.com/52105933/95031842-07a4ea00-06f3-11eb-9022-db54e399da32.gif)|![矢印（赤）](https://user-images.githubusercontent.com/52105933/110228721-b0779f80-7f46-11eb-8cd9-469501beea50.png)|![Hopper_std_G_202010122350_1000_1579](https://user-images.githubusercontent.com/52105933/95936264-218bae80-0e10-11eb-9804-48b9add13747.gif)|
 
 ※HopperPyBulletの画像が白いのはご了承下さい。Google Colaboratory上で3Dのpybullet-gymの動きを色つきでキャプチャーする簡便な方法がありませんでした。<BR>
 ![hopper_60](https://user-images.githubusercontent.com/52105933/95032126-6159e400-06f4-11eb-81b6-0762ce248401.png) ←本来のHopperPyBulletの外観。脳内イメージ補完してください。<BR><BR>
