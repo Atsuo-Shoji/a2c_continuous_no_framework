@@ -12,7 +12,9 @@ Pendulumの訓練済パラメーターファイルの使い方
 
 ②環境の生成
 
+import time
 import gym
+
 #Pendulum
 env = gym.make("Pendulum-v0")
 st_dim = env.observation_space.shape[0]
@@ -26,7 +28,7 @@ p_sep = Planner_separate("test", env=env, state_dim=st_dim, action_dim=ac_dim)
 
 ④訓練済パラメーターのセット
 
-p_sep.overwrite_params_from_file("./Pendulum_sep_202010010221.pickle")
+p_sep.overwrite_params_from_file("./trained_params/Pendulum_sep_202010010221.pickle")
 
 ⑤Pendulumをplay
 
@@ -41,14 +43,16 @@ try:
     env.render(mode='human')  
         
     for st in range(200):
+        
+        time.sleep(0.025)
 
         print("st:", st)
-	
-	#ここで訓練済モデルから次の行動の推測を得る
+              
+        #ここで訓練済モデルから次の行動の推測を得る
         action_predicted = p_sep.predict_best_action(curr_st) 
       
         next_st, reward, done, _ = env.step(action_predicted)
-	env.render(mode='human')
+        env.render(mode='human')
 
         print(" curr_st" + str(curr_st) + " reward:" + str(reward) + " action_predicted:" + str(action_predicted) + " next_st:" + str(next_st)  )
             
@@ -58,5 +62,5 @@ try:
 
         curr_st = next_st
 
-    finally:
-        env.close()
+finally:
+    env.close()
