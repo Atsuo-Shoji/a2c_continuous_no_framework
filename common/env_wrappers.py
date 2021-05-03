@@ -199,3 +199,54 @@ class EnvWrapper_04(gym.Wrapper):
         rew_ = rew * self._reward_scale
             
         return obs, rew_, done, info, rew
+
+class EnvWrapper_05(gym.Wrapper):
+    """
+    エピソード終了時の報酬
+     エピソード成功時は報酬X, 失敗時は報酬Y
+     成功/失敗の判定：エピソード終了時の報酬がoriginal_reward_for_failed_episodeなら失敗
+     ステップごとの報酬はオリジナルのenvの報酬
+    を返す
+    """
+    def __init__(self, env, original_reward_for_failed_episode, reward_for_successful_episode=1, reward_for_failed_episode=-1):
+        
+        super(EnvWrapper_05, self).__init__(env)
+        
+        self.env = env        
+        self._original_reward_for_failed_episode = original_reward_for_failed_episode
+        self._reward_for_successful_episode = reward_for_successful_episode
+        self._reward_for_failed_episode = reward_for_failed_episode
+        
+        self.steps = 0        
+
+    def reset(self):
+        
+        obs = self.env.reset()
+        self.steps = 0
+        
+        return obs
+    
+    def step(self, action):
+        
+        obs, rew_, done, info, _ = self.step_ex(action)
+        
+        return obs, rew_, done, info
+
+    def step_ex(self, action):
+        
+        self.steps += 1
+        obs, rew, done, info = self.env.step(action)
+        
+        rew_ = rew
+        
+        if done:
+            if rew == self._original_reward_for_failed_episode:
+                if self._reward_for_failed_episode is not None:
+                    rew_ = self._reward_for_failed_episode                
+            else:
+                if self._reward_for_successful_episode is not None:
+                    rew_ = self._reward_for_successful_episode
+        else:
+            rew_ = rew
+            
+        return obs, rew_, done, info, rew
